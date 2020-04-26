@@ -1,8 +1,8 @@
 FROM python:alpine
 RUN apk update
 
-RUN apk add --no-cache python3-dev libstdc++ &&
-    apk add --no-cache g++ &&
+RUN apk add --no-cache python3-dev libstdc++ && \
+    apk add --no-cache g++ && \
     ln -s /usr/include/locale.h /usr/include/xlocale.h
 
 RUN apk --no-cache add lapack libstdc++ && \
