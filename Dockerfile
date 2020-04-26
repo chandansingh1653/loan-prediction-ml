@@ -1,20 +1,11 @@
-FROM python:alpine
-RUN apk update
-
-RUN apk add --no-cache python3-dev libstdc++ && \
-    apk add --no-cache g++ && \
-    ln -s /usr/include/locale.h /usr/include/xlocale.h
-
-RUN apk --no-cache add lapack libstdc++ && \
-    apk add --no-cache python3-dev libstdc++ && \
-    apk --no-cache add --virtual .builddeps g++ gcc gfortran musl-dev lapack-dev && \
-    apk del .builddeps && \
-    rm -rf /root/.cache
-
+FROM  ubuntu:18.04
+RUN apt-get update
+RUN apt-get install -y python python-dev python-pip python-virtualenv
+RUN apt-get install -y python3-pip vim
 ADD requirements.txt /tmp
-RUN pip install -r /tmp/requirements.txt
+RUN pip3 install -r /tmp/requirements.txt
 RUN mkdir -p /data
 COPY loan_predictions/  /data/loan_predictions
 COPY model.py data/
 WORKDIR /data
-CMD python model.py
+CMD python3 model.py
