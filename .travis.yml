@@ -2,17 +2,18 @@ language: python
 python:
   - "3.6"
 
+services:
+  - docker
+
 install:
   - pip install -r requirements.txt
 
 script:
   python model.py
+  docker build -t chandan1653/loan-prediction-ml
+  docker ps -a
+  docker run chandan1653/loan-prediction-ml
+  docker ps -a
 
-services:
-  - docker
 
-before_install:
-  - docker build -t chandan1653/loan-prediction-ml
-  - docker ps -a
-  - docker run chandan1653/loan-prediction-ml
-  - docker ps -a
+
