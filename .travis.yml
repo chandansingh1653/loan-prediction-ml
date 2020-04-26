@@ -5,6 +5,11 @@ python:
 services:
   - docker
 
+before_install:
+  - export VERSION=$(curl --silent "https://api.github.com/repos/aquasecurity/trivy/releases/latest" | grep '"tag_name":' | sed -E 's/.*"v([^"]+)".*/\1/')
+  - wget https://github.com/aquasecurity/trivy/releases/download/v${VERSION}/trivy_${VERSION}_Linux-64bit.tar.gz
+  - tar zxvf trivy_${VERSION}_Linux-64bit.tar.gz
+
 install:
   - pip install -r requirements.txt
 
@@ -12,6 +17,8 @@ script:
   - python model.py
   - echo "$DOCKER_HUB_PASSWORD" | docker login -u "$DOCKER_HUB_USER_NAME" --password-stdin
   - docker build  . -t $DOCKER_HUB_USER_NAME/loan-prediction-ml:$TRAVIS_BUILD_NUMBER
+  - ./trivy --exit-code 0 --severity HIGH --no-progress $DOCKER_HUB_USER_NAME/loan-prediction-ml:$TRAVIS_BUILD_NUMBER
+  - ./trivy --exit-code 1 --severity CRITICAL --no-progress $DOCKER_HUB_USER_NAME/loan-prediction-ml:$TRAVIS_BUILD_NUMBER
   - docker ps -a
   - docker run $DOCKER_HUB_USER_NAME/loan-prediction-ml:$TRAVIS_BUILD_NUMBER
   - docker push $DOCKER_HUB_USER_NAME/loan-prediction-ml:$TRAVIS_BUILD_NUMBER
