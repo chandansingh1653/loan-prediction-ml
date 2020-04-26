@@ -9,11 +9,11 @@ install:
   - pip install -r requirements.txt
 
 script:
-  python model.py
-  docker build -t chandan1653/loan-prediction-ml
-  docker ps -a
-  docker run chandan1653/loan-prediction-ml
-  docker ps -a
+  - python model.py
+  - docker build -t chandan1653/loan-prediction-ml
+  - docker ps -a
+  - docker run chandan1653/loan-prediction-ml
+  - docker ps -a
 
 
 
