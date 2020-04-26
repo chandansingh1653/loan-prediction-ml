@@ -10,9 +10,11 @@ install:
 
 script:
   - python model.py
-  - docker build  . -t chandan1653/loan-prediction-ml
+  - echo "$DOCKER_HUB_PASSWORD" | docker login -u "$DOCKER_HUB_USER_NAME" --password-stdin
+  - docker build  . -t $DOCKER_USERNAME/loan-prediction-ml:$TRAVIS_BUILD_NUMBER
   - docker ps -a
-  - docker run chandan1653/loan-prediction-ml
+  - docker run $DOCKER_USERNAME/loan-prediction-ml:$TRAVIS_BUILD_NUMBER
+  - docker push $DOCKER_USERNAME/loan-prediction-ml:$TRAVIS_BUILD_NUMBER
   - docker ps -a
 
 
