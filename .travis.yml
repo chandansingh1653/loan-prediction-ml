@@ -10,7 +10,7 @@ install:
 
 script:
   - python model.py
-  - docker build -t chandan1653/loan-prediction-ml
+  - docker build  . -t chandan1653/loan-prediction-ml
   - docker ps -a
   - docker run chandan1653/loan-prediction-ml
   - docker ps -a
