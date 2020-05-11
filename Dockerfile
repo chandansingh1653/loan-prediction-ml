@@ -1,7 +1,7 @@
 FROM  ubuntu:18.04
 RUN apt-get update
 RUN apt-get install -y python python-dev python-pip python-virtualenv
-RUN apt-get install -y python3-pip vim git
+RUN apt-get install -y python3-pip
 ADD requirements.txt /tmp
 RUN pip3 install -r /tmp/requirements.txt
 RUN mkdir -p /data
