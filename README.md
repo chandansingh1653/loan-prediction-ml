@@ -1,1 +1,1 @@
-# loan-prediction-ml-2
+# loan-prediction-ml
